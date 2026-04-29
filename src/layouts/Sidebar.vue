@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
 import { Monitor, Box, Cpu, Picture, Setting } from '@element-plus/icons-vue'
+import { useClusterStore } from '../stores/cluster'
 
 const props = defineProps({
   isCollapse: Boolean
@@ -9,6 +10,7 @@ const props = defineProps({
 const emit = defineEmits(['show-settings'])
 const router = useRouter()
 const route = useRoute()
+const store = useClusterStore()
 
 const menuItems = [
   {
@@ -56,7 +58,12 @@ const handleSettings = () => {
 const handleSelect = (index) => {
   if (!index) return // 设置项没有 index，不处理
   // 跳转时保留查询参数（如 cluster）
-  router.push({ path: index, query: { ...route.query } })
+  const query = { ...route.query }
+  // 确保 cluster 参数为当前选中的集群
+  if (!query.cluster) {
+    query.cluster = store.activeCluster
+  }
+  router.push({ path: index, query })
 }
 </script>
 
