@@ -23,7 +23,7 @@ export const clusters = [
 ]
 
 export const nodes = [
-  { name: 'node-1', status: 'Ready', roles: ['master'], cpu: '2/4 Core', memory: '4/8 GB' },
-  { name: 'node-2', status: 'Ready', roles: ['worker'], cpu: '1/4 Core', memory: '3/8 GB' },
-  { name: 'node-3', status: 'Ready', roles: ['worker'], cpu: '2/4 Core', memory: '4/8 GB' }
+  { name: 'node-1', cluster: 'dev01-1', status: 'Ready', roles: ['master'], cpu: '2/4 Core', memory: '4/8 GB' },
+  { name: 'node-2', cluster: 'dev01-1', status: 'Ready', roles: ['worker'], cpu: '1/4 Core', memory: '3/8 GB' },
+  { name: 'node-3', cluster: 'dev01-2', status: 'Ready', roles: ['worker'], cpu: '2/4 Core', memory: '4/8 GB' }
 ]

@@ -1,9 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useAppStore } from '../../stores/apps'
+import { useClusterStore } from '../../stores/cluster'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 const store = useAppStore()
+const clusterStore = useClusterStore()
 const scaleDialogVisible = ref(false)
 const editDialogVisible = ref(false)
 const logDrawerVisible = ref(false)
@@ -12,6 +14,11 @@ const newReplicas = ref(1)
 
 onMounted(() => {
   store.fetchApps()
+})
+
+// 根据当前选中的集群过滤应用
+const filteredApps = computed(() => {
+  return store.apps.filter(app => app.cluster === clusterStore.activeCluster)
 })
 
 const handleRestart = (app) => {
@@ -72,7 +79,7 @@ const handleRefresh = () => {
           </div>
         </div>
       </template>
-      <el-table :data="store.apps" style="width: 100%" v-loading="store.loading">
+      <el-table :data="filteredApps" style="width: 100%" v-loading="store.loading">
         <el-table-column prop="name" label="应用名称" />
         <el-table-column prop="image" label="镜像" />
         <el-table-column prop="status" label="状态">

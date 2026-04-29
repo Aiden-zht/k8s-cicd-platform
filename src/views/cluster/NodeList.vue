@@ -1,11 +1,16 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useClusterStore } from '../../stores/cluster'
 
 const store = useClusterStore()
 
 onMounted(() => {
   store.fetchNodes()
+})
+
+// 根据当前选中的集群过滤节点
+const filteredNodes = computed(() => {
+  return store.nodes.filter(node => node.cluster === store.activeCluster)
 })
 </script>
 
@@ -15,7 +20,7 @@ onMounted(() => {
       <template #header>
         <span>节点管理</span>
       </template>
-      <el-table :data="store.nodes" style="width: 100%" v-loading="store.loading">
+      <el-table :data="filteredNodes" style="width: 100%" v-loading="store.loading">
         <el-table-column prop="name" label="节点名称" />
         <el-table-column prop="status" label="状态">
           <template #default="{ row }">

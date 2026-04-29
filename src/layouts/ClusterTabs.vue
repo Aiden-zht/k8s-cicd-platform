@@ -1,17 +1,18 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useClusterStore } from '../stores/cluster'
 
 const store = useClusterStore()
-const activeCluster = ref('dev01-1')
 
 onMounted(() => {
   if (store.clusters.length === 0) {
     store.fetchClusters()
-  } else {
-    activeCluster.value = store.clusters[0]?.name || 'dev01-1'
   }
 })
+
+const handleClick = (clusterName) => {
+  store.setActiveCluster(clusterName)
+}
 </script>
 
 <template>
@@ -20,8 +21,8 @@ onMounted(() => {
       v-for="cluster in store.clusters"
       :key="cluster.name"
       class="cluster-tab"
-      :class="{ active: activeCluster === cluster.name }"
-      @click="activeCluster = cluster.name"
+      :class="{ active: store.activeCluster === cluster.name }"
+      @click="handleClick(cluster.name)"
     >
       {{ cluster.name }}
     </div>
@@ -34,12 +35,14 @@ onMounted(() => {
   background-color: #f5f7fa;
   border-bottom: 1px solid #e6e6e6;
   display: flex;
-  align-items: center;
+  align-items: flex-end;  /* 底部对齐，让激活标签"浮起" */
   padding: 0 10px;
   gap: 4px;
 }
 
 .cluster-tab {
+  position: relative;
+  z-index: 1;
   padding: 8px 16px;
   background-color: #f5f7fa;
   border: 1px solid #e4e7ed;
@@ -49,6 +52,7 @@ onMounted(() => {
   font-size: 14px;
   color: #606266;
   transition: all 0.3s;
+  margin-bottom: -1px;  /* 与下方内容无缝 */
 }
 
 .cluster-tab:hover {
@@ -56,9 +60,13 @@ onMounted(() => {
 }
 
 .cluster-tab.active {
-  background-color: #ffffff;
+  z-index: 10;              /* 最前面 */
+  font-size: 15px;            /* 稍大 */
+  font-weight: 600;
+  box-shadow: 0 -3px 10px rgba(0,0,0,0.12);  /* 浮起阴影 */
+  background-color: #ffffff;   /* 纯白，与内容区融合 */
+  border-top: 2px solid #409eff;  /* 顶部高亮 */
   color: #409eff;
-  border-bottom: 2px solid #409eff;
-  font-weight: 500;
+  margin-bottom: -1px;  /* 与下方内容无缝 */
 }
 </style>

@@ -2,6 +2,7 @@ export const apps = [
   {
     id: 1,
     name: 'nginx-app',
+    cluster: 'dev01-1',
     image: 'nginx:1.25',
     status: 'Running',
     replicas: 3,
@@ -32,6 +33,7 @@ spec:
   {
     id: 2,
     name: 'redis-cache',
+    cluster: 'dev01-2',
     image: 'redis:7.2',
     status: 'Running',
     replicas: 1,

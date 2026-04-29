@@ -1,11 +1,18 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { usePipelineStore } from '../../stores/pipelines'
+import { useClusterStore } from '../../stores/cluster'
 
 const store = usePipelineStore()
+const clusterStore = useClusterStore()
 
 onMounted(() => {
   store.fetchPipelines()
+})
+
+// 根据当前选中的集群过滤流水线
+const filteredPipelines = computed(() => {
+  return store.pipelines.filter(p => p.cluster === clusterStore.activeCluster)
 })
 </script>
 
@@ -18,7 +25,7 @@ onMounted(() => {
           <el-button type="primary">创建流水线</el-button>
         </div>
       </template>
-      <el-table :data="store.pipelines" style="width: 100%" v-loading="store.loading">
+      <el-table :data="filteredPipelines" style="width: 100%" v-loading="store.loading">
         <el-table-column prop="name" label="流水线名称" />
         <el-table-column prop="status" label="状态">
           <template #default="{ row }">

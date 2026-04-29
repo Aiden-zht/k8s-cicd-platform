@@ -1,11 +1,18 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRegistryStore } from '../../stores/registry'
+import { useClusterStore } from '../../stores/cluster'
 
 const store = useRegistryStore()
+const clusterStore = useClusterStore()
 
 onMounted(() => {
   store.fetchImages()
+})
+
+// 根据当前选中的集群过滤镜像
+const filteredImages = computed(() => {
+  return store.images.filter(img => img.cluster === clusterStore.activeCluster)
 })
 </script>
 
@@ -18,7 +25,7 @@ onMounted(() => {
           <el-button type="primary">拉取镜像</el-button>
         </div>
       </template>
-      <el-table :data="store.images" style="width: 100%" v-loading="store.loading">
+      <el-table :data="filteredImages" style="width: 100%" v-loading="store.loading">
         <el-table-column prop="name" label="镜像名称" />
         <el-table-column prop="tag" label="标签" />
         <el-table-column prop="size" label="大小" />
