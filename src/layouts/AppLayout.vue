@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed, watch, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import AppHeader from './AppHeader.vue'
 import Sidebar from './Sidebar.vue'
 import ClusterTabs from './ClusterTabs.vue'
@@ -9,6 +9,7 @@ import Settings from '../views/settings/Settings.vue'
 const isCollapse = ref(false)
 const showSettings = ref(false)
 const route = useRoute()
+const router = useRouter()
 
 const handleToggleSidebar = () => {
   isCollapse.value = !isCollapse.value
@@ -17,6 +18,17 @@ const handleToggleSidebar = () => {
 const handleShowSettings = () => {
   showSettings.value = true
 }
+
+// 初始化时检查：如果 URL 是 /settings，显示设置页面并修正 URL
+onMounted(() => {
+  if (route.path === '/settings') {
+    showSettings.value = true
+    // 用 replaceState 修改 URL，不触发路由跳转（避免闪现）
+    const url = new URL(window.location)
+    url.pathname = '/cluster'
+    window.history.replaceState({}, '', url)
+  }
+})
 
 // 设置页面的自定义面包屑
 const settingsBreadcrumbs = computed(() => {
@@ -28,9 +40,11 @@ const settingsBreadcrumbs = computed(() => {
   return []
 })
 
-// 路由变化时隐藏设置
-watch(() => route.path, () => {
-  showSettings.value = false
+// 路由变化时隐藏设置（排除初始化时的修正）
+watch(() => route.path, (newPath) => {
+  if (newPath !== '/settings') {
+    showSettings.value = false
+  }
 })
 </script>
 

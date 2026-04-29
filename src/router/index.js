@@ -69,12 +69,11 @@ const routes = [
       }
     ]
   },
-  {
-    path: '/settings',
-    name: 'Settings',
-    component: () => import('../views/settings/Settings.vue')
-  },
-  {
+    {
+      path: '/settings',
+      redirect: '/cluster'
+    },
+    {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/NotFound.vue')
