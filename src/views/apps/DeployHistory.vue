@@ -1,11 +1,18 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useAppStore } from '../../stores/apps'
+import { useClusterStore } from '../../stores/cluster'
 
 const store = useAppStore()
+const clusterStore = useClusterStore()
 
 onMounted(() => {
   store.fetchDeployments()
+})
+
+// 根据当前选中的集群过滤部署记录
+const filteredDeployments = computed(() => {
+  return store.deployments.filter(d => d.cluster === clusterStore.activeCluster)
 })
 </script>
 
@@ -17,7 +24,7 @@ onMounted(() => {
       </template>
       <el-timeline>
         <el-timeline-item
-          v-for="item in store.deployments"
+          v-for="item in filteredDeployments"
           :key="item.time"
           :timestamp="item.time"
           placement="top"
@@ -32,3 +39,23 @@ onMounted(() => {
     </el-card>
   </div>
 </template>
+
+<style scoped>
+.deploy-history {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.deploy-history :deep(.el-card) {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.deploy-history :deep(.el-card__body) {
+  height: calc(100% - 60px);
+  padding: 0;
+  overflow-y: auto;
+}
+</style>

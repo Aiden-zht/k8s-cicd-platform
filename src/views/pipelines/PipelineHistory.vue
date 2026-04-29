@@ -41,3 +41,22 @@ const filteredRuns = computed(() => {
     </el-card>
   </div>
 </template>
+
+<style scoped>
+.pipeline-history {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.pipeline-history :deep(.el-card) {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.pipeline-history :deep(.el-card__body) {
+  height: calc(100% - 60px);
+  padding: 0;
+}
+</style>

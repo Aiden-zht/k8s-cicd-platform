@@ -36,3 +36,23 @@ const save = () => {
     </el-card>
   </div>
 </template>
+
+<style scoped>
+.registry-config {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.registry-config :deep(.el-card) {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.registry-config :deep(.el-card__body) {
+  height: calc(100% - 60px);
+  padding: 20px;
+  overflow-y: auto;
+}
+</style>

@@ -38,3 +38,22 @@ const filteredNodes = computed(() => {
     </el-card>
   </div>
 </template>
+
+<style scoped>
+.node-list {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.node-list :deep(.el-card) {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.node-list :deep(.el-card__body) {
+  height: calc(100% - 60px);
+  padding: 0;
+}
+</style>

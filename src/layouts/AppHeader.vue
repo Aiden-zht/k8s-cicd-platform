@@ -12,14 +12,28 @@ const props = defineProps({
 })
 
 const breadcrumbs = computed(() => {
-  if (props.customBreadcrumbs && props.customBreadcrumbs.length > 0) {
+  if (props.customBreadcrumbs && props.customBreadcrumbs.length >0) {
     return props.customBreadcrumbs
   }
   const matched = route.matched.filter(r => r.name)
-  return matched.map(r => ({
-    title: r.meta?.title || r.name,
-    path: r.path
-  }))
+  return matched.map(r => {
+    // 将路由名映射为中文
+    const titleMap = {
+      'ClusterList': '集群列表',
+      'NodeList': '节点管理',
+      'AppList': '应用列表',
+      'DeployHistory': '部署记录',
+      'PipelineList': '流水线列表',
+      'PipelineHistory': '运行历史',
+      'ImageList': '镜像列表',
+      'RegistryConfig': '仓库配置',
+      'Settings': '系统设置'
+    }
+    return {
+      title: titleMap[r.name] || r.meta?.title || r.name,
+      path: r.path
+    }
+  })
 })
 </script>
 
