@@ -36,7 +36,13 @@ onMounted(() => {
 
 <style scoped>
 .cluster-list {
+  height: 100%;
+  box-sizing: border-box;
   padding: 20px;
+}
+
+.cluster-list .el-card {
+  height: 100%;
 }
 
 .card-header {

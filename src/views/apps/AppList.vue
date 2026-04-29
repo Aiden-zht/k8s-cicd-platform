@@ -135,7 +135,13 @@ const handleRefresh = () => {
 
 <style scoped>
 .app-list {
+  height: 100%;
+  box-sizing: border-box;
   padding: 20px;
+}
+
+.app-list .el-card {
+  height: 100%;
 }
 
 .card-header {

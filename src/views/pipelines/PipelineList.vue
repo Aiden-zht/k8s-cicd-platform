@@ -47,7 +47,13 @@ const filteredPipelines = computed(() => {
 
 <style scoped>
 .pipeline-list {
+  height: 100%;
+  box-sizing: border-box;
   padding: 20px;
+}
+
+.pipeline-list .el-card {
+  height: 100%;
 }
 
 .card-header {

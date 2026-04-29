@@ -5,6 +5,8 @@ defineProps({
   isCollapse: Boolean
 })
 
+const emit = defineEmits(['show-settings'])
+
 const menuItems = [
   {
     title: '集群管理',
@@ -41,8 +43,12 @@ const menuItems = [
 ]
 
 const singleMenuItems = [
-  { title: '设置', icon: Setting, path: '/settings' }
+  { title: '设置', icon: Setting }
 ]
+
+const handleSettings = () => {
+  emit('show-settings')
+}
 </script>
 
 <template>
@@ -74,8 +80,8 @@ const singleMenuItems = [
       </template>
       <el-menu-item
         v-for="item in singleMenuItems"
-        :key="item.path"
-        :index="item.path"
+        :key="item.title"
+        @click="handleSettings"
       >
         <el-icon><component :is="item.icon" /></el-icon>
         <template #title>{{ item.title }}</template>

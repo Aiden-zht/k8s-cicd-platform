@@ -37,7 +37,13 @@ const filteredImages = computed(() => {
 
 <style scoped>
 .image-list {
+  height: 100%;
+  box-sizing: border-box;
   padding: 20px;
+}
+
+.image-list .el-card {
+  height: 100%;
 }
 
 .card-header {

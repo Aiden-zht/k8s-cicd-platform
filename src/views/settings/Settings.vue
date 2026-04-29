@@ -39,6 +39,8 @@ const save = () => {
 
 <style scoped>
 .settings {
+  height: 100%;
+  box-sizing: border-box;
   padding: 20px;
 }
 </style>
