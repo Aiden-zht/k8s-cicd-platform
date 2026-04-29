@@ -57,13 +57,8 @@ const handleSettings = () => {
 
 const handleSelect = (index) => {
   if (!index) return // 设置项没有 index，不处理
-  // 跳转时保留查询参数（如 cluster）
-  const query = { ...route.query }
-  // 确保 cluster 参数为当前选中的集群
-  if (!query.cluster) {
-    query.cluster = store.activeCluster
-  }
-  router.push({ path: index, query })
+  // 直接用 store.activeCluster，不依赖 route.query
+  router.push({ path: index, query: { cluster: store.activeCluster } })
 }
 </script>
 

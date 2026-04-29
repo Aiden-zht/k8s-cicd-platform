@@ -25,7 +25,7 @@ const filteredPipelines = computed(() => {
           <el-button type="primary">创建流水线</el-button>
         </div>
       </template>
-      <el-table :data="filteredPipelines" style="width: 100%" v-loading="store.loading">
+      <el-table :data="filteredPipelines" style="width: 100%" v-loading="store.loading.pipelines">
         <el-table-column prop="name" label="流水线名称" />
         <el-table-column prop="status" label="状态">
           <template #default="{ row }">

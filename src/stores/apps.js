@@ -5,28 +5,33 @@ export const useAppStore = defineStore('apps', {
   state: () => ({
     apps: [],
     deployments: [],
-    loading: false,
+    loading: {
+      apps: false,
+      deployments: false
+    },
     error: null
   }),
   actions: {
     async fetchApps() {
-      this.loading = true
+      this.loading.apps = true
+      this.error = null
       try {
         this.apps = await getApps()
       } catch (err) {
-        this.error = err.message
+        this.error = err instanceof Error ? err.message : String(err)
       } finally {
-        this.loading = false
+        this.loading.apps = false
       }
     },
     async fetchDeployments() {
-      this.loading = true
+      this.loading.deployments = true
+      this.error = null
       try {
         this.deployments = await getDeployments()
       } catch (err) {
-        this.error = err.message
+        this.error = err instanceof Error ? err.message : String(err)
       } finally {
-        this.loading = false
+        this.loading.deployments = false
       }
     }
   }

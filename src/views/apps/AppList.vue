@@ -79,12 +79,12 @@ const handleRefresh = () => {
           </div>
         </div>
       </template>
-      <el-table :data="filteredApps" style="width: 100%" v-loading="store.loading">
+      <el-table :data="filteredApps" style="width: 100%" v-loading="store.loading.apps">
         <el-table-column prop="name" label="应用名称" />
         <el-table-column prop="image" label="镜像" />
         <el-table-column prop="status" label="状态">
           <template #default="{ row }">
-            <el-tag type="success">{{ row.status }}</el-tag>
+            <el-tag :type="row.status === 'Running' ? 'success' : row.status === 'Stopped' ? 'danger' : 'warning'">{{ row.status }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="replicas" label="副本数" />

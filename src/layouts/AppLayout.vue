@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useClusterStore } from '../stores/cluster'
 import AppHeader from './AppHeader.vue'
 import Sidebar from './Sidebar.vue'
 import ClusterTabs from './ClusterTabs.vue'
@@ -10,6 +11,7 @@ const isCollapse = ref(false)
 const showSettings = ref(false)
 const route = useRoute()
 const router = useRouter()
+const store = useClusterStore()
 
 const handleToggleSidebar = () => {
   isCollapse.value = !isCollapse.value
@@ -19,14 +21,17 @@ const handleShowSettings = () => {
   showSettings.value = true
 }
 
-// 初始化时检查：如果 URL 是 /settings，显示设置页面并修正 URL
+// 初始化时检查 URL 中的 cluster 参数
 onMounted(() => {
+  const clusterFromQuery = route.query.cluster
+  if (clusterFromQuery && typeof clusterFromQuery === 'string') {
+    store.setActiveCluster(clusterFromQuery)
+  }
+  
+  // 如果 URL 是 /settings，显示设置页面并跳转
   if (route.path === '/settings') {
     showSettings.value = true
-    // 用 replaceState 修改 URL，不触发路由跳转（避免闪现）
-    const url = new URL(window.location)
-    url.pathname = '/cluster'
-    window.history.replaceState({}, '', url)
+    router.replace('/cluster')
   }
 })
 
@@ -40,10 +45,19 @@ const settingsBreadcrumbs = computed(() => {
   return []
 })
 
-// 路由变化时隐藏设置（排除初始化时的修正）
+// 路由变化时隐藏设置
 watch(() => route.path, (newPath) => {
   if (newPath !== '/settings') {
     showSettings.value = false
+  }
+})
+
+// 监听 store 变化同步到 URL
+watch(() => store.activeCluster, (newCluster) => {
+  if (newCluster && newCluster !== route.query.cluster) {
+    router.push({ 
+      query: { ...route.query, cluster: newCluster }
+    })
   }
 })
 </script>

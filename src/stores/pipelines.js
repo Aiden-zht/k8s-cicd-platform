@@ -5,28 +5,33 @@ export const usePipelineStore = defineStore('pipelines', {
   state: () => ({
     pipelines: [],
     runs: [],
-    loading: false,
+    loading: {
+      pipelines: false,
+      runs: false
+    },
     error: null
   }),
   actions: {
     async fetchPipelines() {
-      this.loading = true
+      this.loading.pipelines = true
+      this.error = null
       try {
         this.pipelines = await getPipelines()
       } catch (err) {
-        this.error = err.message
+        this.error = err instanceof Error ? err.message : String(err)
       } finally {
-        this.loading = false
+        this.loading.pipelines = false
       }
     },
     async fetchRuns() {
-      this.loading = true
+      this.loading.runs = true
+      this.error = null
       try {
         this.runs = await getPipelineRuns()
       } catch (err) {
-        this.error = err.message
+        this.error = err instanceof Error ? err.message : String(err)
       } finally {
-        this.loading = false
+        this.loading.runs = false
       }
     },
     async run(id) {

@@ -10,10 +10,11 @@ export const useRegistryStore = defineStore('registry', {
   actions: {
     async fetchImages() {
       this.loading = true
+      this.error = null
       try {
         this.images = await getImages()
       } catch (err) {
-        this.error = err.message
+        this.error = err instanceof Error ? err.message : String(err)
       } finally {
         this.loading = false
       }
