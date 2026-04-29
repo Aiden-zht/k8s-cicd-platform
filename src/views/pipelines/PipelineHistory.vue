@@ -22,7 +22,7 @@ const filteredRuns = computed(() => {
       <template #header>
         <span>运行历史</span>
       </template>
-      <el-table :data="filteredRuns" style="width: 100%" v-loading="store.loading">
+      <el-table :data="filteredRuns" style="width: 100%" v-loading="store.loading.runs">
         <el-table-column prop="pipeline" label="流水线" />
         <el-table-column prop="branch" label="分支" />
         <el-table-column prop="status" label="状态">

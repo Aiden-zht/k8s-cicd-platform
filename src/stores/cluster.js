@@ -6,7 +6,7 @@ export const useClusterStore = defineStore('cluster', {
     const params = new URLSearchParams(window.location.search)
     const clusterFromURL = params.get('cluster')
     const savedCluster = sessionStorage.getItem('activeCluster')
-    console.log('cluster store state init, clusterFromURL:', clusterFromURL, 'savedCluster:', savedCluster)
+    console.log('cluster store state init, location.search:', window.location.search, 'clusterFromURL:', clusterFromURL, 'savedCluster:', savedCluster)
     return {
       clusters: [],
       activeCluster: clusterFromURL || savedCluster || 'dev01-1',
@@ -26,12 +26,11 @@ export const useClusterStore = defineStore('cluster', {
       console.log('after setActiveCluster, activeCluster:', this.activeCluster)
     },
     async fetchClusters() {
-      console.log('fetchClusters called, current activeCluster:', this.activeCluster)
+      console.log('fetchClusters called, activeCluster:', this.activeCluster)
       this.loading = true
       try {
         this.clusters = await getClusters()
         console.log('after fetchClusters, clusters:', this.clusters.length, 'activeCluster:', this.activeCluster)
-        // 不再在这里重置 activeCluster
       } catch (err) {
         this.error = err.message
       } finally {

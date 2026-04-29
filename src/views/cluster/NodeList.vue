@@ -20,11 +20,11 @@ const filteredNodes = computed(() => {
       <template #header>
         <span>节点管理</span>
       </template>
-      <el-table :data="filteredNodes" style="width: 100%" v-loading="store.loading">
+      <el-table :data="filteredNodes" style="width: 100%" v-loading="store.loading.nodes">
         <el-table-column prop="name" label="节点名称" />
         <el-table-column prop="status" label="状态">
           <template #default="{ row }">
-            <el-tag type="success">{{ row.status }}</el-tag>
+            <el-tag :type="row.status === 'Ready' ? 'success' : 'danger'">{{ row.status }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="roles" label="角色">

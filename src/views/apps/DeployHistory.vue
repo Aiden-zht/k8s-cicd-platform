@@ -31,7 +31,7 @@ const filteredDeployments = computed(() => {
         >
           <el-card>
             <h4>{{ item.app }} - {{ item.version }}</h4>
-            <p>状态: <el-tag type="success">{{ item.status }}</el-tag></p>
+            <p>状态: <el-tag :type="item.status === 'Success' ? 'success' : 'danger'">{{ item.status }}</el-tag></p>
             <p>操作人: {{ item.operator }}</p>
           </el-card>
         </el-timeline-item>
