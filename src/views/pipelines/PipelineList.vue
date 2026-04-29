@@ -46,6 +46,10 @@ const filteredPipelines = computed(() => {
 </template>
 
 <style scoped>
+.pipeline-list {
+  padding: 20px;
+}
+
 .card-header {
   display: flex;
   justify-content: space-between;

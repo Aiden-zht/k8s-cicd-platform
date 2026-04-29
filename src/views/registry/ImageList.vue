@@ -36,6 +36,10 @@ const filteredImages = computed(() => {
 </template>
 
 <style scoped>
+.image-list {
+  padding: 20px;
+}
+
 .card-header {
   display: flex;
   justify-content: space-between;

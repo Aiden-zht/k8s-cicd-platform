@@ -36,3 +36,9 @@ const save = () => {
     </el-card>
   </div>
 </template>
+
+<style scoped>
+.settings {
+  padding: 20px;
+}
+</style>

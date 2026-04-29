@@ -40,15 +40,9 @@ const menuItems = [
   }
 ]
 
-const emit = defineEmits(['show-settings'])
-
 const singleMenuItems = [
-  { title: '设置', icon: Setting }
+  { title: '设置', icon: Setting, path: '/settings' }
 ]
-
-const handleSettings = () => {
-  emit('show-settings')
-}
 </script>
 
 <template>
@@ -80,8 +74,8 @@ const handleSettings = () => {
       </template>
       <el-menu-item
         v-for="item in singleMenuItems"
-        :key="item.title"
-        @click="handleSettings"
+        :key="item.path"
+        :index="item.path"
       >
         <el-icon><component :is="item.icon" /></el-icon>
         <template #title>{{ item.title }}</template>

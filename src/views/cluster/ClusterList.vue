@@ -35,6 +35,10 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.cluster-list {
+  padding: 20px;
+}
+
 .card-header {
   display: flex;
   justify-content: space-between;
