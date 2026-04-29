@@ -1,0 +1,47 @@
+<script setup>
+import { onMounted } from 'vue'
+import { usePipelineStore } from '../../stores/pipelines'
+
+const store = usePipelineStore()
+
+onMounted(() => {
+  store.fetchPipelines()
+})
+</script>
+
+<template>
+  <div class="pipeline-list">
+    <el-card>
+      <template #header>
+        <div class="card-header">
+          <span>流水线列表</span>
+          <el-button type="primary">创建流水线</el-button>
+        </div>
+      </template>
+      <el-table :data="store.pipelines" style="width: 100%" v-loading="store.loading">
+        <el-table-column prop="name" label="流水线名称" />
+        <el-table-column prop="status" label="状态">
+          <template #default="{ row }">
+            <el-tag :type="row.status === 'Success' ? 'success' : 'warning'">{{ row.status }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="lastRun" label="最近运行" />
+        <el-table-column prop="duration" label="耗时" />
+        <el-table-column label="操作">
+          <template #default="{ row }">
+            <el-button type="primary" size="small" @click="store.run(row.id)">运行</el-button>
+            <el-button size="small">编辑</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+  </div>
+</template>
+
+<style scoped>
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>
