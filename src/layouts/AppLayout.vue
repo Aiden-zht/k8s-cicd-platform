@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from './AppHeader.vue'
 import Sidebar from './Sidebar.vue'
@@ -18,6 +18,16 @@ const handleShowSettings = () => {
   showSettings.value = true
 }
 
+// 设置页面的自定义面包屑
+const settingsBreadcrumbs = computed(() => {
+  if (showSettings.value) {
+    return [
+      { title: '系统设置', path: null }
+    ]
+  }
+  return []
+})
+
 // 路由变化时隐藏设置
 watch(() => route.path, () => {
   showSettings.value = false
@@ -29,7 +39,11 @@ watch(() => route.path, () => {
     <Sidebar :isCollapse="isCollapse" @show-settings="handleShowSettings" />
     <el-container>
       <el-header class="header">
-        <AppHeader :isCollapse="isCollapse" @toggle-sidebar="handleToggleSidebar" />
+        <AppHeader 
+          :isCollapse="isCollapse" 
+          @toggle-sidebar="handleToggleSidebar"
+          :custom-breadcrumbs="settingsBreadcrumbs"
+        />
       </el-header>
       <ClusterTabs />
       <el-main class="main-content">

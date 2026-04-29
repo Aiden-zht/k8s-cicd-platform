@@ -12,11 +12,9 @@ const save = () => {
 
 <template>
   <div class="settings">
-    <el-card>
-      <template #header>
-        <span>系统设置</span>
-      </template>
-      <el-form label-width="120px">
+    <el-card :body-style="{ padding: '20px', height: '100%' }" class="settings-card">
+      <h3>系统设置</h3>
+      <el-form label-width="120px" class="settings-form">
         <el-form-item label="主题">
           <el-radio-group v-model="theme">
             <el-radio value="light">浅色</el-radio>
@@ -42,5 +40,25 @@ const save = () => {
   height: 100%;
   box-sizing: border-box;
   padding: 20px;
+}
+
+.settings :deep(.el-card) {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.settings :deep(.el-card__body) {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+}
+
+.settings h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.settings-form {
+  max-width: 600px;
 }
 </style>

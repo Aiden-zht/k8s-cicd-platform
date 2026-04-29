@@ -42,8 +42,15 @@ const filteredImages = computed(() => {
   padding: 20px;
 }
 
-.image-list .el-card {
+.image-list :deep(.el-card) {
   height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.image-list :deep(.el-card__body) {
+  height: calc(100% - 60px);
+  padding: 0;
 }
 
 .card-header {

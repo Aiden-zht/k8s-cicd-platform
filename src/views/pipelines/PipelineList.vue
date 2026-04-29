@@ -52,8 +52,15 @@ const filteredPipelines = computed(() => {
   padding: 20px;
 }
 
-.pipeline-list .el-card {
+.pipeline-list :deep(.el-card) {
   height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.pipeline-list :deep(.el-card__body) {
+  height: calc(100% - 60px);
+  padding: 0;
 }
 
 .card-header {

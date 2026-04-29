@@ -6,11 +6,15 @@ import { Fold, Expand } from '@element-plus/icons-vue'
 const route = useRoute()
 const emit = defineEmits(['toggle-sidebar'])
 
-defineProps({
-  isCollapse: Boolean
+const props = defineProps({
+  isCollapse: Boolean,
+  customBreadcrumbs: Array
 })
 
 const breadcrumbs = computed(() => {
+  if (props.customBreadcrumbs && props.customBreadcrumbs.length > 0) {
+    return props.customBreadcrumbs
+  }
   const matched = route.matched.filter(r => r.name)
   return matched.map(r => ({
     title: r.meta?.title || r.name,
@@ -31,7 +35,7 @@ const breadcrumbs = computed(() => {
         <el-breadcrumb-item
           v-for="crumb in breadcrumbs"
           :key="crumb.path"
-          :to="{ path: crumb.path }"
+          :to="crumb.path ? { path: crumb.path } : null"
         >
           {{ crumb.title }}
         </el-breadcrumb-item>

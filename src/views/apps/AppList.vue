@@ -140,8 +140,19 @@ const handleRefresh = () => {
   padding: 20px;
 }
 
-.app-list .el-card {
+.app-list :deep(.el-card) {
   height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.app-list :deep(.el-card__body) {
+  height: calc(100% - 60px);
+  padding: 0;
+}
+
+.app-list :deep(.el-table) {
+  width: 100% !important;
 }
 
 .card-header {

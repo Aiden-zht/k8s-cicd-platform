@@ -41,8 +41,15 @@ onMounted(() => {
   padding: 20px;
 }
 
-.cluster-list .el-card {
+.cluster-list :deep(.el-card) {
   height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.cluster-list :deep(.el-card__body) {
+  height: calc(100% - 60px);
+  padding: 0;
 }
 
 .card-header {
