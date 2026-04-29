@@ -1,17 +1,24 @@
 export const clusters = [
   {
-    name: 'prod-cluster',
+    name: 'dev01-1',
     status: 'Running',
     version: 'v1.28.2',
     nodes: 3,
     createdAt: '2026-01-15'
   },
   {
-    name: 'dev-cluster',
+    name: 'dev01-2',
+    status: 'Running',
+    version: 'v1.28.2',
+    nodes: 2,
+    createdAt: '2026-02-20'
+  },
+  {
+    name: 'unite-1',
     status: 'Running',
     version: 'v1.27.8',
     nodes: 2,
-    createdAt: '2026-02-20'
+    createdAt: '2026-03-10'
   }
 ]
 
