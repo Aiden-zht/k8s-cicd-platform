@@ -1,11 +1,14 @@
 <script setup>
+import { useRouter, useRoute } from 'vue-router'
 import { Monitor, Box, Cpu, Picture, Setting } from '@element-plus/icons-vue'
 
-defineProps({
+const props = defineProps({
   isCollapse: Boolean
 })
 
 const emit = defineEmits(['show-settings'])
+const router = useRouter()
+const route = useRoute()
 
 const menuItems = [
   {
@@ -49,6 +52,12 @@ const singleMenuItems = [
 const handleSettings = () => {
   emit('show-settings')
 }
+
+const handleSelect = (index) => {
+  if (!index) return // 设置项没有 index，不处理
+  // 跳转时保留查询参数（如 cluster）
+  router.push({ path: index, query: { ...route.query } })
+}
 </script>
 
 <template>
@@ -60,8 +69,8 @@ const handleSettings = () => {
     <el-menu
       :collapse="isCollapse"
       :default-active="$route.path"
-      router
       class="sidebar-menu"
+      @select="handleSelect"
     >
       <template v-for="item in menuItems" :key="item.title">
         <el-sub-menu :index="item.children[0].path">
