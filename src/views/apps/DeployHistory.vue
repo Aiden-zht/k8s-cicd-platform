@@ -2,6 +2,7 @@
 import { computed, onMounted } from 'vue'
 import { useAppStore } from '../../stores/apps'
 import { useClusterStore } from '../../stores/cluster'
+import { getStatusType } from '../../utils/status'
 
 const store = useAppStore()
 const clusterStore = useClusterStore()
@@ -31,7 +32,7 @@ const filteredDeployments = computed(() => {
         >
           <el-card>
             <h4>{{ item.app }} - {{ item.version }}</h4>
-            <p>状态: <el-tag :type="item.status === 'Success' ? 'success' : 'danger'">{{ item.status }}</el-tag></p>
+            <p>状态: <el-tag :type="getStatusType(item.status)" effect="plain">{{ item.status }}</el-tag></p>
             <p>操作人: {{ item.operator }}</p>
           </el-card>
         </el-timeline-item>

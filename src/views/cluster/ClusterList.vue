@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { useClusterStore } from '../../stores/cluster'
 import { Monitor } from '@element-plus/icons-vue'
+import { getStatusType } from '../../utils/status'
 
 const store = useClusterStore()
 
@@ -23,7 +24,7 @@ onMounted(() => {
         <el-table-column prop="name" label="集群名称" />
         <el-table-column prop="status" label="状态">
           <template #default="{ row }">
-            <el-tag type="success">{{ row.status }}</el-tag>
+            <el-tag :type="getStatusType(row.status)" effect="plain">{{ row.status }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="version" label="K8s 版本" />

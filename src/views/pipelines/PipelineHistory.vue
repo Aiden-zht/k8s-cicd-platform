@@ -2,6 +2,7 @@
 import { computed, onMounted } from 'vue'
 import { usePipelineStore } from '../../stores/pipelines'
 import { useClusterStore } from '../../stores/cluster'
+import { getStatusType } from '../../utils/status'
 
 const store = usePipelineStore()
 const clusterStore = useClusterStore()
@@ -27,7 +28,7 @@ const filteredRuns = computed(() => {
         <el-table-column prop="branch" label="分支" />
         <el-table-column prop="status" label="状态">
           <template #default="{ row }">
-            <el-tag :type="row.status === 'Success' ? 'success' : 'danger'">{{ row.status }}</el-tag>
+            <el-tag :type="getStatusType(row.status)" effect="plain">{{ row.status }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="time" label="运行时间" />

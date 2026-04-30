@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import { useClusterStore } from '../../stores/cluster'
+import { getStatusType } from '../../utils/status'
 
 const store = useClusterStore()
 
@@ -24,7 +25,7 @@ const filteredNodes = computed(() => {
         <el-table-column prop="name" label="节点名称" />
         <el-table-column prop="status" label="状态">
           <template #default="{ row }">
-            <el-tag :type="row.status === 'Ready' ? 'success' : 'danger'">{{ row.status }}</el-tag>
+            <el-tag :type="getStatusType(row.status)" effect="plain">{{ row.status }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="roles" label="角色">
